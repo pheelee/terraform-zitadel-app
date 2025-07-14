@@ -1,0 +1,43 @@
+locals {
+  user_grants = merge([
+    for role, users in var.role_assertions : {
+      for user in users :
+      "${role}_${user}" => user
+    }
+  ]...)
+}
+
+resource "zitadel_project" "sso" {
+  name                   = title(var.display_name)
+  org_id                 = var.org_id
+  has_project_check      = true
+  project_role_check     = true
+  project_role_assertion = true
+}
+
+resource "zitadel_project_role" "sso" {
+  for_each     = var.role_assertions
+  org_id       = var.org_id
+  project_id   = zitadel_project.sso.id
+  role_key     = "${lower(var.display_name)}_${each.key}"
+  display_name = "${title(var.display_name)} ${title(each.key)}"
+  group        = lower(var.display_name)
+}
+
+resource "zitadel_application_oidc" "sso" {
+  name           = lower(var.display_name)
+  org_id         = var.org_id
+  project_id     = zitadel_project.sso.id
+  redirect_uris  = var.redirect_uris
+  response_types = var.response_types
+  grant_types    = var.grant_types
+}
+
+resource "zitadel_user_grant" "sso" {
+  depends_on = [zitadel_project_role.sso]
+  for_each   = local.user_grants
+  org_id     = var.org_id
+  project_id = zitadel_project.sso.id
+  role_keys  = ["${lower(var.display_name)}_${split("_", each.key)[0]}"]
+  user_id    = each.value
+}
