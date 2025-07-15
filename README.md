@@ -48,8 +48,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| app\_type | Type of the application | `string` | `"OIDC_APP_TYPE_WEB"` | no |
 | display\_name | Displayname of the app | `string` | n/a | yes |
 | grant\_types | List of grant types | `list(string)` | <pre>[<br/>  "OIDC_GRANT_TYPE_AUTHORIZATION_CODE"<br/>]</pre> | no |
+| id\_token\_userinfo\_assertion | Put userinfo into id\_token | `bool` | `true` | no |
 | org\_id | ID of the organization that hosts the app | `string` | n/a | yes |
 | redirect\_uris | List of redirect URIs | `list(string)` | n/a | yes |
 | response\_types | List of response types | `list(string)` | <pre>[<br/>  "OIDC_RESPONSE_TYPE_CODE"<br/>]</pre> | no |

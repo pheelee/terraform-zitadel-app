@@ -25,12 +25,14 @@ resource "zitadel_project_role" "sso" {
 }
 
 resource "zitadel_application_oidc" "sso" {
-  name           = lower(var.display_name)
-  org_id         = var.org_id
-  project_id     = zitadel_project.sso.id
-  redirect_uris  = var.redirect_uris
-  response_types = var.response_types
-  grant_types    = var.grant_types
+  name                        = lower(var.display_name)
+  org_id                      = var.org_id
+  project_id                  = zitadel_project.sso.id
+  redirect_uris               = var.redirect_uris
+  response_types              = var.response_types
+  grant_types                 = var.grant_types
+  id_token_userinfo_assertion = var.id_token_userinfo_assertion
+  app_type                    = var.app_type
 }
 
 resource "zitadel_user_grant" "sso" {

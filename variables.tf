@@ -3,6 +3,16 @@ variable "display_name" {
   description = "Displayname of the app"
 }
 
+variable "app_type" {
+  type        = string
+  description = "Type of the application"
+  validation {
+    condition     = contains(["OIDC_APP_TYPE_WEB", "OIDC_APP_TYPE_USER_AGENT", "OIDC_APP_TYPE_NATIVE"], var.app_type)
+    error_message = "App type must be one of OIDC_APP_TYPE_WEB, OIDC_APP_TYPE_USER_AGENT or OIDC_APP_TYPE_NATIVE"
+  }
+  default = "OIDC_APP_TYPE_WEB"
+}
+
 variable "org_id" {
   type        = string
   description = "ID of the organization that hosts the app"
@@ -28,4 +38,10 @@ variable "grant_types" {
   type        = list(string)
   description = "List of grant types"
   default     = ["OIDC_GRANT_TYPE_AUTHORIZATION_CODE"]
+}
+
+variable "id_token_userinfo_assertion" {
+  type        = bool
+  description = "Put userinfo into id_token"
+  default     = true
 }
