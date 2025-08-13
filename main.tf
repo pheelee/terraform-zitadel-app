@@ -19,7 +19,7 @@ resource "zitadel_project_role" "sso" {
   for_each     = var.role_assertions
   org_id       = var.org_id
   project_id   = zitadel_project.sso.id
-  role_key     = "${lower(var.display_name)}_${each.key}"
+  role_key     = each.key
   display_name = "${title(var.display_name)} ${title(each.key)}"
   group        = lower(var.display_name)
 }
@@ -33,6 +33,8 @@ resource "zitadel_application_oidc" "sso" {
   grant_types                 = var.grant_types
   id_token_userinfo_assertion = var.id_token_userinfo_assertion
   app_type                    = var.app_type
+  auth_method_type            = var.app_type == "OIDC_APP_TYPE_USER_AGENT" ? "OIDC_AUTH_METHOD_TYPE_NONE" : "OIDC_AUTH_METHOD_TYPE_BASIC"
+
 }
 
 resource "zitadel_user_grant" "sso" {
@@ -40,6 +42,6 @@ resource "zitadel_user_grant" "sso" {
   for_each   = local.user_grants
   org_id     = var.org_id
   project_id = zitadel_project.sso.id
-  role_keys  = ["${lower(var.display_name)}_${split("_", each.key)[0]}"]
+  role_keys  = [split("_", each.key)[0]]
   user_id    = each.value
 }
