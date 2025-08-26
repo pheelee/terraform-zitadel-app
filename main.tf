@@ -2,7 +2,7 @@ locals {
   user_grants = merge([
     for role, users in var.role_assertions : {
       for user in users :
-      "${role}_${user}" => user
+      "${role}++${user}" => user
     }
   ]...)
 }
@@ -42,6 +42,6 @@ resource "zitadel_user_grant" "sso" {
   for_each   = local.user_grants
   org_id     = var.org_id
   project_id = zitadel_project.sso.id
-  role_keys  = [split("_", each.key)[0]]
+  role_keys  = [split("++", each.key)[0]]
   user_id    = each.value
 }
