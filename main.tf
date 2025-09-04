@@ -1,10 +1,12 @@
 locals {
-  user_grants = merge([
-    for role, users in var.role_assertions : {
-      for user in users :
-      "${role}++${user}" => user
-    }
-  ]...)
+  user_grants = flatten([
+    for role, users in var.role_assertions : [
+      for user in users : {
+        role = role
+        user = user
+      }
+    ]
+  ])
 }
 
 resource "zitadel_project" "sso" {
@@ -38,10 +40,10 @@ resource "zitadel_application_oidc" "sso" {
 }
 
 resource "zitadel_user_grant" "sso" {
+  count      = length(local.user_grants)
   depends_on = [zitadel_project_role.sso]
-  for_each   = local.user_grants
   org_id     = var.org_id
   project_id = zitadel_project.sso.id
-  role_keys  = [split("++", each.key)[0]]
-  user_id    = each.value
+  role_keys  = [local.user_grants[count.index].role]
+  user_id    = local.user_grants[count.index].user
 }
