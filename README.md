@@ -41,6 +41,7 @@ No modules.
 |------|------|
 | [zitadel_application_oidc.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/application_oidc) | resource |
 | [zitadel_project.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project) | resource |
+| [zitadel_project_grant.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project_grant) | resource |
 | [zitadel_project_role.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project_role) | resource |
 | [zitadel_user_grant.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/user_grant) | resource |
 
@@ -48,6 +49,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| additional\_org\_grants | Object that contains additional organizations and roles (must match role\_assertions) that should be granted. Although a user assignment must be still made | <pre>list(object({<br/>    org_id = number<br/>    roles  = list(string)<br/>  }))</pre> | `[]` | no |
 | app\_type | Type of the application | `string` | `"OIDC_APP_TYPE_WEB"` | no |
 | display\_name | Displayname of the app | `string` | n/a | yes |
 | grant\_types | List of grant types | `list(string)` | <pre>[<br/>  "OIDC_GRANT_TYPE_AUTHORIZATION_CODE"<br/>]</pre> | no |

@@ -18,6 +18,15 @@ variable "org_id" {
   description = "ID of the organization that hosts the app"
 }
 
+variable "additional_org_grants" {
+  type = list(object({
+    org_id = number
+    roles  = list(string)
+  }))
+  description = "Object that contains additional organizations and roles (must match role_assertions) that should be granted. Although a user assignment must be still made"
+  default     = []
+}
+
 variable "redirect_uris" {
   type        = list(string)
   description = "List of redirect URIs"

@@ -47,3 +47,11 @@ resource "zitadel_user_grant" "sso" {
   role_keys  = [local.user_grants[count.index].role]
   user_id    = local.user_grants[count.index].user
 }
+
+resource "zitadel_project_grant" "sso" {
+  for_each       = { for g in var.additional_org_grants : g.org_id => g }
+  org_id         = var.org_id
+  project_id     = zitadel_project.sso.id
+  granted_org_id = each.key
+  role_keys      = each.value.roles
+}
