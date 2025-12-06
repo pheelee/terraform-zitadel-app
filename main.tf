@@ -35,7 +35,7 @@ resource "zitadel_application_oidc" "sso" {
   grant_types                 = var.grant_types
   id_token_userinfo_assertion = var.id_token_userinfo_assertion
   app_type                    = var.app_type
-  auth_method_type            = var.app_type == "OIDC_APP_TYPE_USER_AGENT" ? "OIDC_AUTH_METHOD_TYPE_NONE" : "OIDC_AUTH_METHOD_TYPE_BASIC"
+  auth_method_type            = var.app_type == "OIDC_APP_TYPE_WEB" ? "OIDC_AUTH_METHOD_TYPE_BASIC" : "OIDC_AUTH_METHOD_TYPE_NONE"
 
 }
 
