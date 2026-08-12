@@ -8,6 +8,7 @@ If you need more flexibility you can write the configuration from scratch.
 ```hcl
 module "zitadel_app" {
   source        = "app.terraform.io/irbech/app/zitadel"
+  version       = "~>1.0"
   display_name  = "Dozzle"
   org_id        = zitadel_org.myorg.id
   redirect_uris = ["https://app.example.com/oauth2/callback"]
@@ -22,14 +23,14 @@ module "zitadel_app" {
 
 | Name | Version |
 |------|---------|
-| terraform | >=1.7 |
-| zitadel | ~>2.2 |
+| terraform | >=1.12 |
+| zitadel | ~>3.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| zitadel | ~>2.2 |
+| zitadel | ~>3.3 |
 
 ## Modules
 
@@ -39,10 +40,10 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [zitadel_application_oidc.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/application_oidc) | resource |
-| [zitadel_project.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project) | resource |
+| [zitadel_application_v2.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/application_v2) | resource |
 | [zitadel_project_grant.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project_grant) | resource |
 | [zitadel_project_role.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project_role) | resource |
+| [zitadel_project_v2.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/project_v2) | resource |
 | [zitadel_user_grant.sso](https://registry.terraform.io/providers/zitadel/zitadel/latest/docs/resources/user_grant) | resource |
 
 ## Inputs
